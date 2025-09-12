@@ -69,6 +69,7 @@ body{
     position: relative;
     color: white;
     text-align: center;
+    cursor:pointer;
 }
 
 .folder_image{
