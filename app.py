@@ -1,7 +1,7 @@
 import os
 from flask import Flask, jsonify, render_template, send_from_directory
 from flask_cors import CORS
-
+from livereload import Server
 
 app = Flask(__name__)
 CORS(app)
@@ -40,4 +40,8 @@ def api_vid():
     })
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0" , port=5000, debug=True)
+    server = Server(app.wsgi_app)
+    server.watch('templates/*.*')
+    server.watch('css/*.*')
+    server.watch('js/*.*')
+    server.serve(host="0.0.0.0" , port=5000, debug=True)
