@@ -12,7 +12,12 @@ Video_dir = "static/movies"
 def get_movies():
     files = []
     for entry in os.scandir(Video_dir):
-        files.append(entry.name)
+        if entry.is_file():
+            if not (entry.name.lower().endswith(".mp4") or entry.name.lower().endswith(".mkv")):
+                files.append(entry.name)
+        elif entry.is_dir():
+            files.append(entry.name)
+
     return files
 
 @app.route("/")
