@@ -44,6 +44,14 @@ def api_vid():
         "files":videos
     })
 
+@app.route("/selected/movie")
+def selected_movie():
+    videos = get_movies()
+    return jsonify({
+        "count":len(videos),
+        "files":videos
+    })
+
 if __name__ == "__main__":
     server = Server(app.wsgi_app)
     server.watch('templates/*.*')

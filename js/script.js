@@ -13,10 +13,19 @@ async function loadfiles(){
             count++;
             const containt_movies =  main_div.cloneNode(true);
             containt_movies.style.display = "block";
-            containt_movies.id="container-"+count;
+            containt_movies.classList.add("movie-item");
+            containt_movies.setAttribute("data-file",file);
             const text = containt_movies.querySelector("span");
             text.textContent = file;
             list.append(containt_movies)
+        });
+
+        document.addEventListener("click", function(e){
+            if(e.target.closest(".movie-item")){
+                const movieDiv = e.target.closest(".movie-item");
+                const file = movieDiv.getAttribute("data-file");
+                alert("clicked: " + file);
+            }
         });
     }catch(err){
         console.error("Error fetching data files: ", err);
