@@ -36,6 +36,10 @@ def custom_js(filename):
 def folder_images(filename):
     return send_from_directory('resources', filename)
 
+@app.route('/Templates/<path:filename>')
+def templates(filename):
+    return send_from_directory('Templates',filename)
+
 @app.route("/api/videos")
 def api_vid():
     videos = get_movies()
@@ -44,17 +48,13 @@ def api_vid():
         "files":videos
     })
 
-@app.route("/selected/movie")
+@app.route('/watch')
 def selected_movie():
-    videos = get_movies()
-    return jsonify({
-        "count":len(videos),
-        "files":videos
-    })
+    return render_template("watch.html")
 
 if __name__ == "__main__":
     server = Server(app.wsgi_app)
-    server.watch('templates/*.*')
+    server.watch('Templates/*.html')
     server.watch('css/*.*')
     server.watch('js/*.*')
     server.serve(host="0.0.0.0" , port=5000, debug=True)

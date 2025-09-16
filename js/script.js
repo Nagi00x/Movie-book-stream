@@ -25,6 +25,7 @@ async function loadfiles(){
                 const movieDiv = e.target.closest(".movie-item");
                 const file = movieDiv.getAttribute("data-file");
                 alert("clicked: " + file);
+                window.location.href="/watch";
             }
         });
     }catch(err){
