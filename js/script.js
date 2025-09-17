@@ -41,17 +41,10 @@ async function loadfiles(){
                     method:"POST",
                     headers:{"Content-Type":"application/json"},
                     body: JSON.stringify({folder:file})
+                }).then(() => {
+                    window.location.href = "/watch";
                 });
 
-                const data2 = await res_ser.json();
-
-                if (data2.status === "success"){
-                        alert("clicked: " + file);
-                    
-                }
-                else{
-                    alert("wronggggg!")
-                }
 
             }
         });

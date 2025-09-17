@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, render_template, send_from_directory, request
+from flask import Flask, jsonify, render_template, send_from_directory, request, session
 from flask_cors import CORS
 from flask_socketio import SocketIO
 
@@ -56,19 +56,14 @@ def selected_movie():
 @app.route("/watch-movie", methods=["POST"])
 def watch_movie():
     data = request.get_json()
-    folder_path = data.get("folder")
-    full_path = os.path.join(Video_dir, folder_path)
-    print(full_path)
+    session["folder"] = data.get("folder")
+    return{"status":"ok"}
 
-    if not full_path or not os.path.isdir(full_path):
-        return jsonify({"status":"error","message":"invalid folder"})
-    
-    try:
-        items = os.listdir(full_path)
-        return jsonify({"status":"success","items": items})
-    
-    except Exception as e:
-        return jsonify({"status":"error","message":str(e)})
+@app.route('/play-movie')
+def play_movie():
+    full_path = os.path.join(Video_dir,session.get("folder"))
+    print(full_path)
+    return jsonify({"folder":full_path})
     
 
 
