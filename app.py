@@ -1,11 +1,12 @@
 import os
-from flask import Flask, jsonify, render_template, send_from_directory
+from flask import Flask, jsonify, render_template, send_from_directory, request
 from flask_cors import CORS
-from livereload import Server
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 CORS(app)
 
+socketio = SocketIO(app, cors_allowed_origins="")
 
 Video_dir = "static/movies"   
 
@@ -52,9 +53,29 @@ def api_vid():
 def selected_movie():
     return render_template("watch.html")
 
+@app.route("/watch-movie", methods=["POST"])
+def watch_movie():
+    data = request.get_json()
+    folder_path = data.get("folder")
+    full_path = os.path.join(Video_dir, folder_path)
+    print(full_path)
+
+    if not full_path or not os.path.isdir(full_path):
+        return jsonify({"status":"error","message":"invalid folder"})
+    
+    try:
+        items = os.listdir(full_path)
+        return jsonify({"status":"success","items": items})
+    
+    except Exception as e:
+        return jsonify({"status":"error","message":str(e)})
+    
+
+
+@socketio.on('connect')
+def handle_connect():
+    print("client Connected")
+    socketio.emit("server message", {"msg": "Welcome! Live updates enabled."})
+
 if __name__ == "__main__":
-    server = Server(app.wsgi_app)
-    server.watch('Templates/*.html')
-    server.watch('css/*.*')
-    server.watch('js/*.*')
-    server.serve(host="0.0.0.0" , port=5000, debug=True)
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
