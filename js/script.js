@@ -28,7 +28,7 @@ async function loadfiles(){
             containt_movies.setAttribute("data-file",file);
             const text = containt_movies.querySelector("span");
             text.textContent = file;
-            list.append(containt_movies)
+            list.append(containt_movies);
         });
 
         document.addEventListener("click", async function(e){
@@ -36,16 +36,25 @@ async function loadfiles(){
                 const movieDiv = e.target.closest(".movie-item");
                 const file = movieDiv.getAttribute("data-file");
                 
+                try{
+                    const res_ser = await fetch("http://127.0.0.1:5000/watch-movie", {
+                        method:"POST",
+                        headers:{"Content-Type":"application/json"},
+                        body: JSON.stringify({folder:file})
+                    });
 
-                const res_ser = await fetch("http://127.0.0.1:5000/watch-movie", {
-                    method:"POST",
-                    headers:{"Content-Type":"application/json"},
-                    body: JSON.stringify({folder:file})
-                }).then(() => {
-                    window.location.href = "/watch";
-                });
-
-
+                    const result = await res_ser.json();
+            
+                    console.log("server response:", result);
+                    if(result.status === "success"){
+                        window.location.href = "/watch";
+                    }
+                    else{
+                        alert("failed");
+                    }
+                }catch (err) {
+                    console.error("Fetch error:", err);
+                }
             }
         });
     }catch(err){
