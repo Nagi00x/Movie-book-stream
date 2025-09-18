@@ -5,13 +5,25 @@
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body>
-    <!-- <video src="" id="video_placeholder"></video> -->
-    <div id="List">
-        <div id="filename">
-            <span>text</span>
+    <section class="sectionA">
+        <div class="transparent-bg"></div>
+        <div class="nav">
+            <div class="buttons-nav">
+                <button id="movie-btn">Movie</button>
+                <button id="books-btn">Books</button>
+                <a href="http://127.0.0.1:5000" id="hello">button</a>
+            </div>
+            <div class="List" id="List">
+                <div class="filename" id="filename">
+                    <span>text</span>
+                </div>
+            </div>
         </div>
-    </div>
-    <a href="http://127.0.0.1:5000" id="hello">button</a>
+        <div class="videoplayer">
+            <video id="vid" controls></video>
+        </div>
+    </section>
+    
     <script src="../js/watch.js"></script>
 </body>
 </html>

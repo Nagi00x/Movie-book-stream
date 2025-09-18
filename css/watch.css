@@ -2,6 +2,7 @@
     margin:0px;
     padding:0px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 body{
@@ -9,7 +10,83 @@ body{
     width: 100%;
 }
 
-#List{
+.sectionA{
+    height:100vh;
+    width:100vw;
+    display:flex;
+    gap:10px;
+}
+
+.transparent-bg{
+    background-color: black;
+    opacity:0.4;
+    position:absolute;
+    height:100vh;
+    width:100vw;
+}
+
+.nav{
+    border:1px solid black;
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 100vh;
+    width: 20%;
+    z-index: 1000;
+}
+
+.buttons-nav{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.buttons-nav button{
+    height: 40px;
+    width: 100%;
+}
+
+.List{
+    height:600px;
+    width: 100%;
+    padding: 10px 3px;
+    border:1px solid black;
+    margin: 20px 0;
+    display:flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    position: relative
+}
+
+.filename{
+    border: 1px solid black;
+    width: 100px;
+    height: 80px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filename span{
+    font-weight: bolder;
+}
+
+.videoplayer{
+    width:77%;
+    border:1px solid red;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.videoplayer #vid{
+    width:100%;
+    border:1px solid black;
+    height: 70vh;
+}
+
+/* #List{
     height:90%;
     width:90%;
     background-color:gray;
@@ -24,4 +101,4 @@ body{
     border: 1px solid red;
     width: 100px;
     height:80px;
-}
+} */

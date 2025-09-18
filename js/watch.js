@@ -38,13 +38,22 @@ async function loadfiles(){
                 text.textContent = count;
                 container.append(content_file);
             });
-            
 
-
+            document.addEventListener("click", async function(e){
+                if(e.target.closest(".File-name")){
+                    const movieDiv = e.target.closest(".File-name");
+                    const file = movieDiv.getAttribute("data-file");
+                    const movie = document.getElementById("vid");
+                    console.log(file)
+                    console.log("clicked")
+                    movie.src = "http://127.0.0.1:5000/video/"+file;
+                    movie.load();
+                    movie.play();
+                }
+            });
         }catch(err){
         console.error("Error fetching data files: ", err);
         }
-
     }catch(err){
         console.error("Error fetching data files: ", err);
     }

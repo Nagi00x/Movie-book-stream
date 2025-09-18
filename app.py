@@ -1,5 +1,9 @@
 import os
-from flask import Flask, jsonify, render_template, send_from_directory, request, session
+from flask import Flask, jsonify, render_template
+from flask import send_from_directory, request, session, Response, send_file
+from flask import abort
+import mimetypes
+import re
 from flask_cors import CORS
 from flask_socketio import SocketIO
 
@@ -36,8 +40,8 @@ def get_Files(FilesTakes):
     for entry in os.scandir(FilesTakes):
         if entry.is_file():
             if entry.name.lower().endswith(".browser.mp4"):
-                print(entry.name)
-                allFiles.append(entry.name)
+                print(f"{FilesTakes}/{entry.name}")
+                allFiles.append(f"{FilesTakes}/{entry.name}")
 
     return allFiles
 
@@ -53,6 +57,37 @@ def get_files():
         "files":ListAllFiles
     })
 
+@app.route("/video/<path:filename>")
+def stream_video(filename):
+    file_path = os.path.join(filename)
+    if not os.path.exists(file_path):
+        abort(404)
+
+    range_header = request.headers.get("Range", None)
+    file_size = os.path.getsize(file_path)
+
+    if range_header:
+        byte1, byte2 = 0, None
+        match = range_header.replace("bytes=", "").split("-")
+        if match[0]:
+            byte1 = int(match[0])
+        if len(match) == 2 and match[1]:
+            byte2 = int(match[1])
+
+        byte2 = byte2 if byte2 is not None else file_size - 1
+        length = byte2 - byte1 + 1
+
+        with open(file_path, "rb") as f:
+            f.seek(byte1)
+            data = f.read(length)
+
+        resp = Response(data, 206, mimetype="video/mp4")
+        resp.headers.add("Content-Range", f"bytes {byte1}-{byte2}/{file_size}")
+        resp.headers.add("Accept-Ranges", "bytes")
+        resp.headers.add("Content-Length", str(length))
+        return resp
+    else:
+        return Response(open(file_path, "rb"), mimetype="video/mp4")
 
 @app.route("/")
 def home():
