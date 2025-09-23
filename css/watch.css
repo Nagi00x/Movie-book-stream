@@ -5,6 +5,11 @@
     overflow: hidden;
 }
 
+@font-face{
+    font-family:"jersey";
+    src:url("../Fonts/jersey-15-latin-400-normal.ttf") format("truetype");
+}
+
 body{
     height: 100vh;
     width: 100%;
@@ -18,8 +23,7 @@ body{
 }
 
 .transparent-bg{
-    background-color: black;
-    opacity:0.4;
+    background-color: #BEBEBE;
     position:absolute;
     height:100vh;
     width:100vw;
@@ -33,6 +37,7 @@ body{
     height: 100vh;
     width: 20%;
     z-index: 1000;
+    background-color: #D9D9D9;
 }
 
 .buttons-nav{
@@ -41,10 +46,46 @@ body{
     gap:10px;
 }
 
-.buttons-nav button{
-    height: 40px;
-    width: 100%;
+#hello{
+    text-decoration: none;
+    color: black;
 }
+
+.buttons-nav button{
+    height: 20px;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid black;
+    font-family: "Poppins", sans-serif;
+    border-radius: 10px;
+}
+
+.buttons-nav button:hover{
+    background-color: yellow;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: ease-in .2s;
+}
+
+.buttons-nav .name{
+    border:2px solid black;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.buttons-nav .name h1{
+    font-family:"jersey", sans-serif;
+    text-align: center;
+    width:90%;
+    border: 1px solid black;
+    font-size:35px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
 
 .List{
     height:600px;
@@ -55,16 +96,15 @@ body{
     display:flex;
     flex-direction:column;
     flex-wrap: wrap;
-    position: relative
+    position: relative;
+    align-items: center;
 }
 
 .filename{
     border: 1px solid black;
-    width: 100px;
-    height: 80px;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+    width: 90%;
+    height: 30px;
+    padding: 3px 0 0 10px;
 }
 
 .filename span{

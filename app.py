@@ -101,6 +101,10 @@ def custom_css(filename):
 def custom_js(filename):
     return send_from_directory('js', filename)
 
+@app.route('/Fonts/<path:filename>')
+def custom_fonts(filename):
+    return send_from_directory('Fonts', filename)
+
 @app.route('/resources/<path:filename>')
 def folder_images(filename):
     return send_from_directory('resources', filename)
